@@ -42,6 +42,10 @@ COPY service/xinetd /etc/service/xinetd
 COPY xinetd.conf /etc/xinetd.conf
 COPY my_init.d/*.sh /etc/my_init.d/
 
+RUN apt-get update && apt-get install -y netcat && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY docker-healthcheck.sh ${PREFIX}/docker-healthcheck.sh
+HEALTHCHECK CMD ${PREFIX}/docker-healthcheck.sh || exit 1
+
 CMD [ "/sbin/my_init" ]
 
 EXPOSE 3050/tcp
