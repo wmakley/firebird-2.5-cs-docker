@@ -56,13 +56,15 @@ run() {
 
         echo "SYSDBA password: ${pwd}"
 
-        if ! [ -z ${ISC_PASSWORD} ]; then
-            setuser firebird ${PREFIX}/bin/gsec -user SYSDBA -password ${pwd} -modify SYSDBA -pw ${ISC_PASSWORD}
+        if ! [ -z "${ISC_PASSWORD}" ]; then
+            setuser firebird ${PREFIX}/bin/gsec -user SYSDBA -password ${pwd} -modify SYSDBA -pw "${ISC_PASSWORD}"
             echo "SYSDBA password changed: ${ISC_PASSWORD}"
         fi
 
         cp ${PREFIX}/security2.fdb ${VOLUME}/data/security2.fdb
+        # allow host to read
         chown firebird:firebird ${VOLUME}/data/security2.fdb
+        chmod o+r ${VOLUME}/data/security2.fdb
     fi
 }
 
