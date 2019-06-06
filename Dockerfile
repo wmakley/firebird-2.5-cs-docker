@@ -3,6 +3,11 @@ FROM phusion/baseimage:0.11
 # This is not able to be changed when installing from pre-built binary.
 ARG PREFIX=/opt/firebird
 
+# Set to "false" to make it easier for host to read secure data in volume.
+# Useful if you want to run as yourself instead of "sudo docker run".
+# (Default is secure.)
+ENV LIMIT_HOST_ACCESS_TO_VOLUME=true
+
 ENV PREFIX=${PREFIX}
 ENV DEBIAN_FRONTEND noninteractive
 ENV FBURL=https://github.com/FirebirdSQL/firebird/releases/download/R2_5_8/FirebirdCS-2.5.8.27089-0.amd64.tar.gz

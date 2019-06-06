@@ -32,8 +32,10 @@ setup_volume() {
     chown -R firebird:firebird $LOG
 
     # Allow docker host to read firebird data
-    chmod -R o+r $DATA
-    chmod -R o+r $LOG
+    if [ "$LIMIT_HOST_ACCESS_TO_VOLUME" = "false" ]; then
+        chmod -R o+r $DATA
+        chmod -R o+r $LOG
+    fi
 }
 
 read_sysdba_password() {
@@ -62,9 +64,12 @@ run() {
         fi
 
         cp ${PREFIX}/security2.fdb ${VOLUME}/data/security2.fdb
-        # allow host to read
         chown firebird:firebird ${VOLUME}/data/security2.fdb
-        chmod o+r ${VOLUME}/data/security2.fdb
+
+        # allow host to read
+        if [ "$LIMIT_HOST_ACCESS_TO_VOLUME" = "false" ]; then
+            chmod o+r ${VOLUME}/data/security2.fdb
+        fi
     fi
 }
 
