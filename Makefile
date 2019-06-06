@@ -7,7 +7,7 @@ image:
 
 # Push the built image to docker hub
 release: image
-	docker push ${REPO}:${TAG}
+	git push --tags
 
 # Explore the built image using bash with all services running
 test: image volume
