@@ -6,7 +6,8 @@ ARG PREFIX=/opt/firebird
 ENV PREFIX=${PREFIX}
 ENV DEBIAN_FRONTEND noninteractive
 ENV FBURL=https://github.com/FirebirdSQL/firebird/releases/download/R2_5_8/FirebirdCS-2.5.8.27089-0.amd64.tar.gz
-ENV DBPATH=/firebird/data
+ENV VOLUME=/firebird
+ENV DBPATH="${VOLUME}/data"
 
 # 1. Install xinetd
 RUN apt-get update && \
@@ -28,6 +29,7 @@ RUN apt-get update && \
     tar --strip=1 -xf firebird.tar.gz && \
     /home/firebird/install.sh -silent && \
     rm -rf /home/firebird && \
+    mkdir -p ${VOLUME} && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # 3. Install healthcheck
@@ -42,11 +44,6 @@ ENV PATH="${PREFIX}/bin:$PATH"
 COPY service/xinetd /etc/service/xinetd
 COPY xinetd.conf /etc/xinetd.conf
 COPY my_init.d/*.sh /etc/my_init.d/
-
-# TODO: Make volumes for all transient data, and provide script to set them up
-ENV VOLUME=/firebird
-RUN mkdir $VOLUME
-# VOLUME /firebird
 
 CMD [ "/sbin/my_init" ]
 

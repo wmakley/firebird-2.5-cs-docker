@@ -57,7 +57,7 @@ run() {
         echo "SYSDBA password: ${pwd}"
 
         if ! [ -z ${ISC_PASSWORD} ]; then
-            ${PREFIX}/bin/gsec -user SYSDBA -password ${pwd} -modify SYSDBA -pw ${ISC_PASSWORD}
+            setuser firebird ${PREFIX}/bin/gsec -user SYSDBA -password ${pwd} -modify SYSDBA -pw ${ISC_PASSWORD}
             echo "SYSDBA password changed: ${ISC_PASSWORD}"
         fi
 
