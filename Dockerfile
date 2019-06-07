@@ -49,6 +49,7 @@ ENV PATH="${PREFIX}/bin:$PATH"
 COPY service/xinetd /etc/service/xinetd
 COPY xinetd.conf /etc/xinetd.conf
 COPY my_init.d/*.sh /etc/my_init.d/
+COPY my_init.pre_shutdown.d/*.sh /etc/my_init.pre_shutdown.d/
 
 CMD [ "/sbin/my_init" ]
 
