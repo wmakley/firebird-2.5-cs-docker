@@ -37,7 +37,11 @@ RUN apt-get update && \
     mkdir -p ${VOLUME} && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# 3. Install healthcheck
+# 3. Lock it down a bit
+RUN sed -i 's/#DatabaseAccess = Full/DatabaseAccess = Restrict \/firebird\/data/' \
+        "${PREFIX}/firebird.conf"
+
+# 4. Install healthcheck
 RUN apt-get update && apt-get install -y netcat && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY docker-healthcheck.sh ${PREFIX}/docker-healthcheck.sh
@@ -45,7 +49,7 @@ HEALTHCHECK CMD ${PREFIX}/docker-healthcheck.sh || exit 1
 
 ENV PATH="${PREFIX}/bin:$PATH"
 
-# Copy startup scripts to locations documented by phusion/baseimage
+# 5. Copy startup scripts to locations documented by phusion/baseimage
 COPY service/xinetd /etc/service/xinetd
 COPY xinetd.conf /etc/xinetd.conf
 COPY my_init.d/*.sh /etc/my_init.d/
