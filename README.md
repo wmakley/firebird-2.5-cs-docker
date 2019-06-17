@@ -13,6 +13,10 @@ Databases (including security2.fdb) go in "/firebird/data", and logs go in "/fir
 * If these directories do not exist on container startup, they will be created.
 * Their permissions will always be reset on container startup to ensure firebird can read and write to them. TODO: add flag to disable?
 
+## Aliases
+
+Aliases for all .fdb files /firebird/data are created automatically. For example, /firebird/data/mydb.fdb can be accessed at its full path, or as "mydb.fdb" or just "mydb".
+
 ## Healthcheck
 
 Healthcheck based on https://github.com/jacobalberty/firebird-docker. Configure a username, password, and database to check by exporting the following environment variables in `/firebird/etc/docker-healthcheck.conf`:

@@ -46,6 +46,21 @@ setup_volume() {
     fi
 }
 
+setup_aliases() {
+    CONF="${PREFIX}/aliases.conf"
+
+    for DB_PATH in ${VOLUME}/data/*.fdb
+    do
+        DB_NAME=$(basename -- "$DB_PATH")
+        if [ "${DB_NAME}" = "security2.fdb" ]; then continue; fi
+
+        SHORT_NAME="${DB_NAME%%.*}"
+        echo "Automatically adding aliases for ${DB_NAME}"
+        echo "${DB_NAME} = ${DB_PATH}
+${SHORT_NAME} = ${DB_PATH}" | tee -a $CONF
+    done
+}
+
 read_sysdba_password() {
     local file="$1"
     local var="ISC_PASSWD"
@@ -54,6 +69,7 @@ read_sysdba_password() {
 
 run() {
     setup_volume
+    setup_aliases
 
     if [ -f ${VOLUME}/data/security2.fdb ]; then
         echo "security2.fdb found in mounted volume, loading..."
