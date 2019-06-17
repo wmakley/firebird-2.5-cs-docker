@@ -5,6 +5,7 @@ DATA="${VOLUME}/data"
 LOG="${VOLUME}/log"
 LOG_FILE="${LOG}/firebird.log"
 ORIGINAL_LOG="${PREFIX}/firebird.log"
+ETC="${VOLUME}/etc"
 
 setup_volume() {
     if [ ! -d $DATA ]; then
@@ -27,6 +28,13 @@ setup_volume() {
         rm $ORIGINAL_LOG
     fi
     ln -s $LOG_FILE $ORIGINAL_LOG
+
+    if [ ! -d $ETC ]; then
+        mkdir -p $ETC
+    fi
+    if [ ! -f "${ETC}/docker-healthcheck.conf" ]; then
+        touch "${ETC}/docker-healthcheck.conf"
+    fi
     
     chown -R firebird:firebird $DATA
     chown -R firebird:firebird $LOG

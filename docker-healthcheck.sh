@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 CONFIG=/firebird/etc/docker-healthcheck.conf
-ISQL=/usr/local/firebird/bin/isql
+ISQL="${PREFIX}/bin/isql"
 HC_IP=127.0.0.1
 HC_PORT=3050
 if [[ -f "${CONFIG}" ]]; then
