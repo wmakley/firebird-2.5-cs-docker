@@ -8,7 +8,7 @@ is not.
 ## Environment Variables
 
 * `ISC_PASSWORD` is required if you do not provide your own security2.fdb, and will be used to set the sysdba password on startup and create security2.fdb.
-* `LIMIT_HOST_ACCESS_TO_VOLUME=true` Set to "false" to allow "docker run" to read all persistent data without "sudo". (Will run `chmod o+r` on databases and logs on startup and when copying data to the persistent volume.)
+* `LIMIT_HOST_ACCESS_TO_VOLUME=true` Set to "false" to allow container to run `chmod` and `chown` on data in /firebird. This is not a security feature; it is just to prevent the container messing with your files in a way that you don't want.
 
 ## Persistent Storage
 
