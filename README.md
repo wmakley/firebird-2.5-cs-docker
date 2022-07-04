@@ -1,5 +1,10 @@
 # Firebird 2.5.8 Classic Docker Image
 
+To be used only for archeological purposes, and not to be considered secure in
+any way. Based on phusion/baseimage because I need something closer to a full
+init environment to make sure this works easily. Working is the goal, slimness
+is not.
+
 ## Environment Variables
 
 * `ISC_PASSWORD` is required if you do not provide your own security2.fdb, and will be used to set the sysdba password on startup and create security2.fdb.
