@@ -12,7 +12,7 @@ setup_aliases() {
 
         SHORT_NAME="${DB_NAME%%.*}"
         echo "Automatically adding aliases for ${DB_NAME}"
-        echo "${DB_NAME} = ${DB_PATH}
+        echo "${SHORT_NAME} = ${DB_PATH}
 ${SHORT_NAME} = ${DB_PATH}" | tee -a $CONF
     done
 }
